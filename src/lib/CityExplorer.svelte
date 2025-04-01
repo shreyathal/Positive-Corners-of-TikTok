@@ -2,6 +2,7 @@
 	import cityInfo from './cityinfo.json';
 	import CityPicker from './CityPicker.svelte';	
 	import CityDetails from './CityDetails.svelte';	
+	import ChapterTwoScroller from './ChapterTwoScroller.svelte';
 
 	const cityNames = cityInfo.map(city => city.name);
 	
@@ -16,6 +17,7 @@
 	}
 </script>
 
+
 <div class="picker">
 	<h2>This is the City Picker for {selectedCity} ✈️</h2>
 	<CityPicker changeChoice={changeSelectedCity} choices={cityNames} />
@@ -27,4 +29,4 @@
 		color: blue;
 	}
 </style>
-
+<ChapterTwoScroller />
