@@ -2,7 +2,8 @@
 	import cityInfo from './cityinfo.json';
 	import CityPicker from './CityPicker.svelte';	
 	import CityDetails from './CityDetails.svelte';	
-
+	import Chapter2 from './Chapter2.svelte';
+	
 	const cityNames = cityInfo.map(city => city.name);
 	
 	let selectedCity = $state(cityNames[0]);
@@ -16,6 +17,7 @@
 	}
 </script>
 
+
 <div class="picker">
 	<h2>This is the City Picker for {selectedCity} ✈️</h2>
 	<CityPicker changeChoice={changeSelectedCity} choices={cityNames} />
@@ -24,6 +26,7 @@
 
 <style>
 	h2 {
-		color: blue;
+		color: pink;
 	}
 </style>
+<Chapter2 />
