@@ -2,8 +2,7 @@
 	import cityInfo from './cityinfo.json';
 	import CityPicker from './CityPicker.svelte';	
 	import CityDetails from './CityDetails.svelte';	
-	import ChapterTwoScroller from './ChapterTwoScroller.svelte';
-
+	
 	const cityNames = cityInfo.map(city => city.name);
 	
 	let selectedCity = $state(cityNames[0]);
@@ -26,7 +25,7 @@
 
 <style>
 	h2 {
-		color: blue;
+		color: pink;
 	}
 </style>
-<ChapterTwoScroller />
+
