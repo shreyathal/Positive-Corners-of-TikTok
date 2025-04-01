@@ -18,6 +18,10 @@ import Scroller from './Scroller.svelte'; // using your custom file
     ];
   </script>
   
+  <h2 style="color: white; text-align: center; z-index: 999; position: relative;">
+    Chapter 2
+  </h2>
+
   <Scroller
     {top}
     {threshold}
@@ -46,7 +50,9 @@ import Scroller from './Scroller.svelte'; // using your custom file
     </div>
   </Scroller>
   
+
   <style>
+    
     .background-layer {
       position: relative;
       width: 100%;
