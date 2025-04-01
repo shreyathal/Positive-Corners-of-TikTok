@@ -22,6 +22,8 @@ import Scroller from './Scroller.svelte'; // using your custom file
     Chapter 2
   </h2>
 
+  <p> This is a small intro paragraph to talk about the "bad" corners of TikTok</p>
+
   <Scroller
     {top}
     {threshold}
@@ -37,7 +39,7 @@ import Scroller from './Scroller.svelte'; // using your custom file
         style="background-image: url('{backgroundImages[index] || backgroundImages[0]}');"
       ></div>
       <div class="text-overlay">
-        <h2>Positive Corners of TikTok</h2>
+        <h2> Text explaing the "bad" corners of TikTok</h2>
       </div>
     </div>
   
