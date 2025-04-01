@@ -2,6 +2,7 @@
 	import cityInfo from './cityinfo.json';
 	import CityPicker from './CityPicker.svelte';	
 	import CityDetails from './CityDetails.svelte';	
+	import Chapter2 from './Chapter2.svelte';
 	
 	const cityNames = cityInfo.map(city => city.name);
 	
