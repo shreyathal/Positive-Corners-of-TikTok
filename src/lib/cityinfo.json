@@ -1,0 +1,26 @@
+[
+	{
+		"name": "Boston",
+		"photoUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSi1VjhimWStUSrm5wqFpEPLwSFXpwFiTfb3w&s",
+		"topSites": [ "Faniel Hall", "Boston Common", "Harvard University" ],
+		"description": "Boston is the capital of Massachusetts and known for its rich history and cultural heritage. Visitors love to explore its historic sites, museums, and vibrant neighborhoods."
+	},
+	{
+		"name": "Austin",
+		"photoUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJ6oRVJ7KZG9ZEaCtdkCNfniguZ5MfdB3D2A&s",
+		"topSites": [ "Barton Springs Pool", "Texas State Capitol", "Zilker Park" ],
+		"description": "Austin is the capital of Texas and known for its live music scene, outdoor spaces, and vibrant culture. It's a hub for technology and innovation, attracting visitors with its unique blend of history and modernity."
+	},
+	{
+		"name": "Omaha",
+		"photoUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsbQMDNq-68AdNQFPR6WP6qTUoTA8qPar4hQ&s",
+		"topSites": [ "Henry Doorly Zoo", "Omaha's Old Market", "Lauritzen Gardens" ],
+		"description": "Omaha is the largest city in Nebraska and known for its rich history, cultural attractions, and vibrant arts scene. Visitors enjoy exploring its museums, parks, and the historic Old Market district."
+	},
+	{
+		"name": "Seattle",
+		"photoUrl": "https://www.visittheusa.com/sites/default/files/styles/16_9_1280x720/public/2017-03/VisitSeattle_HeroSpaceNeedle_2016_vFinal_Web72DPI.jpg?h=77387bcb&itok=hY-_xbAQ",
+		"topSites": [ "Space Needle", "Pike Place Market", "Chihuly Garden and Glass" ],
+		"description": "Seattle is known for its stunning natural beauty, vibrant arts scene, and coffee culture. Visitors love exploring its iconic landmarks, waterfront, and diverse neighborhoods."
+	}
+]
