@@ -1,4 +1,5 @@
 <!-- <script>
+
 import Scroller from './Scroller.svelte'; // using your custom file
   
     let count;
