@@ -1,5 +1,6 @@
 <script>
-	import CityExplorer from './lib/CityExplorer.svelte';
+	import PositiveTikTok from './lib/Chapter2.svelte';
 </script>
 
-<CityExplorer />
+<PositiveTikTok />
+
