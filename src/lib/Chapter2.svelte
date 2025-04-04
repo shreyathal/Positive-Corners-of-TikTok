@@ -22,6 +22,7 @@ import Scroller from './Scroller.svelte'; // using your custom file
   <script>
     import { onMount } from 'svelte';
     import Scroller from './Scroller.svelte';
+    import Chapter3 from './Chapter3.svelte';
   
     let selectedOption = null;
   
@@ -105,6 +106,7 @@ import Scroller from './Scroller.svelte'; // using your custom file
 </div>
   
   <h2 style="color: white; text-align: center; z-index: 999; position: relative;">
+   
     Chapter 2
   </h2>
 
@@ -138,6 +140,7 @@ import Scroller from './Scroller.svelte'; // using your custom file
     </div>
   </Scroller>
   
+<Chapter3/>
 
   <style>
     
