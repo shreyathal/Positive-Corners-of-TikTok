@@ -26,16 +26,16 @@
     <h2>Positive Influence / Happy Side of Tik-tok</h2>
     
     <div class="category-grid">
-      <button class="category-button advice-button" onclick={() => selectCategory('advice')}>
+      <button class="category-button" onclick={() => selectCategory('advice')}>
         <span class="emoji-group">👵👩‍🦳💕</span>
       </button>
-      <button class="category-button fundraising-button" onclick={() => selectCategory('fundraising')}>
+      <button class="category-button" onclick={() => selectCategory('fundraising')}>
         <span class="emoji-group">💰❤️🌱</span>
       </button>
-      <button class="category-button deinfluencing-button" onclick={() => selectCategory('deinfluencing')}>
+      <button class="category-button" onclick={() => selectCategory('deinfluencing')}>
         <span class="emoji-group">👧🚫👑</span>
       </button>
-      <button class="category-button hopecore-button" onclick={() => selectCategory('hopecore')}>
+      <button class="category-button" onclick={() => selectCategory('hopecore')}>
         <span class="emoji-group">✨🌈🙏</span>
       </button>
     </div>
@@ -45,6 +45,7 @@
         title={selectedDetails.title}
         description={selectedDetails.description}
         examples={selectedDetails.examples}
+        impact={selectedDetails.impact}
         category={selectedCategory}
       />
     {/if}
@@ -84,6 +85,7 @@
   }
   
   .category-button {
+    background-color: #3a2222; /* Single color for all buttons */
     border: none;
     border-radius: 8px;
     padding: 20px;
@@ -92,23 +94,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #3a2222; /* Default color */
-  }
-
-  .advice-button {
-    background-color: #FF9FBB;
+    transition: transform 0.2s, opacity 0.2s;
   }
   
-  .fundraising-button {
-    background-color: #4ecdc4;
-  }
-  
-  .deinfluencing-button {
-    background-color: #6c88c4;
-  }
-  
-  .hopecore-button {
-    background-color: #c16ecf;
+  .category-button:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
   }
   
   .emoji-group {

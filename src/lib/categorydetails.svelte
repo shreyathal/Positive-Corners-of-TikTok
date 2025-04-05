@@ -5,9 +5,9 @@
     function getCategoryColor(cat) {
       const colors = {
         advice: "#FF9FBB",
-        fundraising: "#4ecdc4",
-        deinfluencing: "#6c88c4",
-        hopecore: "#c16ecf"
+        fundraising: "#8FBE59",
+        deinfluencing: "#7D9AF1",
+        hopecore: "#F8C622"
       };
       
       return colors[cat] || "#f8f8f8"; // Default to light gray if no match
@@ -26,16 +26,8 @@
       currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
     }
     
-    // Placeholder video titles based on category
-    function getPlaceholderTitles(cat) {
-      const titles = {
-        advice: ["Grandma's Cooking Tips", "Life Lessons From Elders", "Career Advice", "Relationship Wisdom"],
-        fundraising: ["Disaster Relief", "Medical Fundraiser", "Community Project", "Educational Support"],
-        deinfluencing: ["Sustainable Products", "Minimalist Living", "Honest Reviews", "Budget Alternatives"],
-        hopecore: ["Daily Motivation", "Acts of Kindness", "Positive Affirmations", "Inspirational Stories"]
-      };
-      
-      return titles[cat] || ["Video 1", "Video 2", "Video 3", "Video 4"];
+    function goToSlide(index) {
+      currentSlide = index;
     }
   </script>
   
@@ -48,28 +40,30 @@
       <h4>Featured Videos</h4>
       
       <div class="carousel">
-        <button class="carousel-nav prev" onclick={prevSlide}>❮</button>
+        <button type="button" class="carousel-nav prev" onclick={prevSlide} aria-label="Previous slide">❮</button>
         
         <div class="slides-container">
-          {#each getPlaceholderTitles(category) as videoTitle, i}
+          {#each Array(totalSlides) as _, i}
             <div class="slide {i === currentSlide ? 'active' : ''}">
               <div class="video-placeholder">
                 <div class="placeholder-icon">▶️</div>
-                <p>{videoTitle}</p>
               </div>
             </div>
           {/each}
         </div>
         
-        <button class="carousel-nav next" onclick={nextSlide}>❯</button>
+        <button type="button" class="carousel-nav next" onclick={nextSlide} aria-label="Next slide">❯</button>
       </div>
       
       <div class="carousel-indicators">
         {#each Array(totalSlides) as _, i}
-          <span 
+          <button 
+            type="button"
             class="indicator {i === currentSlide ? 'active' : ''}" 
-            onclick={() => currentSlide = i}
-          ></span>
+            onclick={() => goToSlide(i)}
+            aria-label="Go to slide {i+1}"
+            aria-current={i === currentSlide ? "true" : "false"}
+          ></button>
         {/each}
       </div>
     </div>
@@ -99,6 +93,7 @@
     p {
       margin: 10px 0;
       line-height: 1.4;
+      color: black;
     }
     
     /* Carousel Styles */
@@ -113,11 +108,11 @@
       position: relative;
       display: flex;
       align-items: center;
-      height: 180px;
+      height: 300px; /* Increased height */
     }
     
     .carousel-nav {
-      background: rgba(255, 255, 255, 0.7);
+      background: rgba(0, 0, 0, 0.7);
       border: none;
       border-radius: 50%;
       width: 30px;
@@ -128,10 +123,11 @@
       cursor: pointer;
       z-index: 2;
       font-size: 16px;
+      padding: 0;
     }
     
     .carousel-nav:hover {
-      background: rgba(255, 255, 255, 0.9);
+      background: rgba(0, 0, 0, 0.9);
     }
     
     .slides-container {
@@ -159,8 +155,8 @@
     }
     
     .video-placeholder {
-      width: 80%;
-      height: 70%;
+      width: 60%; /* Reduced width */
+      height: 90%; /* Increased height relative to container */
       background-color: rgba(0, 0, 0, 0.1);
       border-radius: 6px;
       display: flex;
@@ -173,7 +169,6 @@
     
     .placeholder-icon {
       font-size: 24px;
-      margin-bottom: 10px;
     }
     
     .carousel-indicators {
@@ -189,6 +184,8 @@
       border-radius: 50%;
       background-color: rgba(0, 0, 0, 0.2);
       cursor: pointer;
+      border: none;
+      padding: 0;
     }
     
     .indicator.active {
