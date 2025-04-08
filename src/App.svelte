@@ -5,6 +5,8 @@
 	import PositiveCorners from './lib/PositiveCorners.svelte';
   
 	let selectedOption = null;
+	let pollResultRef;
+	let reflectionRef;
   
 	const results = {
 	  "Less than 1 hour": 37,
@@ -46,10 +48,14 @@
 	}
   
 	function handleSelect(option) {
-	  selectedOption = option;
-	  localStorage.setItem('tiktok_poll_answer', option);
+	selectedOption = option;
+	localStorage.setItem('tiktok_poll_answer', option);
+
+		tick().then(() => {
+			pollResultRef?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+		});
 	}
-  
+
 	function resetPoll() {
 	  selectedOption = null;
 	  localStorage.removeItem('tiktok_poll_answer');
@@ -59,10 +65,14 @@
 	const reflectionOptions = ["Yes", "No"];
   
 	function handleReflection(answer) {
-	  reflectionAnswer = answer;
-	  localStorage.setItem('tiktok_reflection_answer', answer);
+	reflectionAnswer = answer;
+	localStorage.setItem('tiktok_reflection_answer', answer);
+
+		tick().then(() => {
+			reflectionRef?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+		});
 	}
-  
+
 	function resetReflection() {
 	  reflectionAnswer = null;
 	  localStorage.removeItem('tiktok_reflection_answer');
@@ -92,7 +102,7 @@
   
   <!-- POLL UI -->
   <div class="poll-section">
-	<h2>
+	<h2 bind:this={pollResultRef} class="scroll-anchor">
 	  {#if selectedOption}
 		You are with {results[selectedOption]}% of US teens who<br>also use TikTok for "{selectedOption}" per day.
 	  {:else}
@@ -125,29 +135,35 @@
 	  <button class="reset-button" on:click={resetPoll}>View poll again</button>
 	{/if}
   </div>
-  
+
+  {#if selectedOption}
   <!-- REFLECTION POLL -->
   <div class="reflection-section">
-	<h2>Do you feel like this is too much<br>time to be spending on TikTok?</h2>
-  
-	{#if !reflectionAnswer}
-	  <div class="poll-options">
-		{#each reflectionOptions as option}
-		  <button on:click={() => handleReflection(option)}>{option}</button>
-		{/each}
-	  </div>
-	{:else}
-	  <p class="reflection-response">
-		{#if reflectionAnswer === "Yes"}
-		  You’re not alone in feeling that you are spending too much time on the app.<br>Throughout the rest of the page, we outline some of the positive corners<br>of TikTok that you can explore to make your time on the app more meaningful.
-		{:else if reflectionAnswer === "No"}
-		  That’s great to hear that's you've been practicing healthy scrolling habits!<br>Throughout the rest of the page, we outline some of the positive corners<br>of TikTok that you can explore to make your time on the app even more meaningful.
-		{/if}
-	  </p>
-	  <button class="reset-button" on:click={resetReflection}>Change answer</button>
-	{/if}
+    <h2 bind:this={reflectionRef} class="scroll-anchor">
+		Do you feel like this is too much<br>time to be spending on TikTok?
+	  </h2>
+
+    {#if !reflectionAnswer}
+      <div class="poll-options">
+        {#each reflectionOptions as option}
+          <button on:click={() => handleReflection(option)}>{option}</button>
+        {/each}
+      </div>
+    {:else}
+      <!-- <p class="reflection-response"> -->
+		<p class="subtitle">
+        {#if reflectionAnswer === "Yes"}
+          You’re not alone in feeling that you are spending too much time on the app. Throughout the rest of the page, we outline some of the positive corners of TikTok that you can explore to make your time on the app more meaningful.
+        {:else if reflectionAnswer === "No"}
+          That’s great to hear that you've been practicing healthy scrolling habits! Throughout the rest of the page, we outline some of the positive corners of TikTok that you can explore to make your time on the app even more meaningful.
+        {/if}
+      </p>
+      <button class="reset-button" on:click={resetReflection}>Change answer</button>
+    {/if}
   </div>
+{/if}
   
+{#if selectedOption && reflectionAnswer}
   <!-- SCROLLER INTRO -->
   <div class="scroller-intro">
 	<p class="subtitle">
@@ -211,6 +227,7 @@
 	  So next time you open TikTok, take a breath. Skip the noise. Save the video that made you feel understood. Comment something generous. Share something helpful. You deserve a feed that nourishes you, not one that drains you. Let this be your gentle reminder that a more human algorithm begins with how we choose to show up.
 	</p>
   </div>
+  {/if}
 
   <style>
 	.background-layer {
@@ -280,16 +297,16 @@
 	.poll-section {
 	  text-align: center;
 	  color: white;
-	  margin: 3rem 1rem 5rem;
+	  margin: 5rem 1rem 5rem;
 	}
   
 	.reset-button {
 	  margin-top: 2rem;
 	  background-color: transparent;
-	  border: 2px solid white;
+	  border: 1px solid white;
 	  color: white;
 	  padding: 0.5rem 1rem;
-	  font-size: 0.9rem;
+	  font-size: 0.6rem;
 	  border-radius: 8px;
 	  cursor: pointer;
 	  transition: background-color 0.3s ease;
@@ -393,6 +410,10 @@
 .reflection-response {
   margin-top: 1rem;
   font-size: 1.1rem;
+}
+
+.scroll-anchor {
+  scroll-margin-top: 1.5rem;
 }
 
   </style>
