@@ -3,85 +3,85 @@
 	import { tick } from 'svelte';
 	import Scroller from './lib/Scroller.svelte';
 	import PositiveCorners from './lib/PositiveCorners.svelte';
-
+  
 	let selectedOption = null;
-
+  
 	const results = {
-		"Less than 1 hour": 37,
-		"1-2 hours": 20,
-		"2-3 hours": 22,
-		"More than 3 hours": 23
+	  "Less than 1 hour": 37,
+	  "1-2 hours": 20,
+	  "2-3 hours": 22,
+	  "More than 3 hours": 23
 	};
-
+  
 	const options = Object.keys(results);
-
+  
 	onMount(() => {
-		const saved = localStorage.getItem('tiktok_poll_answer');
-		if (saved && options.includes(saved)) {
-			selectedOption = saved;
-			animateBars(); // animate right away if already answered
-		}
-
-		const reflectionSaved = localStorage.getItem('tiktok_reflection_answer');
-		if (reflectionSaved && reflectionOptions.includes(reflectionSaved)) {
-			reflectionAnswer = reflectionSaved;
-		}
+	  const saved = localStorage.getItem('tiktok_poll_answer');
+	  if (saved && options.includes(saved)) {
+		selectedOption = saved;
+		animateBars();
+	  }
+  
+	  const reflectionSaved = localStorage.getItem('tiktok_reflection_answer');
+	  if (reflectionSaved && reflectionOptions.includes(reflectionSaved)) {
+		reflectionAnswer = reflectionSaved;
+	  }
 	});
-
+  
 	$: if (selectedOption) {
-		runBarAnimation();
+	  runBarAnimation();
 	}
-
+  
 	async function runBarAnimation() {
-		await tick(); // ✅ Waits for DOM to update
-		animateBars(); // ✅ Then triggers the animation
+	  await tick();
+	  animateBars();
 	}
-
+  
 	function animateBars() {
-		const bars = document.querySelectorAll('.bar-fill');
-		bars.forEach(bar => {
-			const value = bar.dataset.fill;
-			bar.style.width = `${value}%`;
-		});
+	  const bars = document.querySelectorAll('.bar-fill');
+	  bars.forEach(bar => {
+		const value = bar.dataset.fill;
+		bar.style.width = `${value}%`;
+	  });
 	}
-
+  
 	function handleSelect(option) {
-		selectedOption = option;
-		localStorage.setItem('tiktok_poll_answer', option);
+	  selectedOption = option;
+	  localStorage.setItem('tiktok_poll_answer', option);
 	}
-
+  
 	function resetPoll() {
-		selectedOption = null;
-		localStorage.removeItem('tiktok_poll_answer');
+	  selectedOption = null;
+	  localStorage.removeItem('tiktok_poll_answer');
 	}
-
+  
 	let reflectionAnswer = null;
 	const reflectionOptions = ["Yes", "No"];
-
+  
 	function handleReflection(answer) {
-		reflectionAnswer = answer;
-		localStorage.setItem('tiktok_reflection_answer', answer);
+	  reflectionAnswer = answer;
+	  localStorage.setItem('tiktok_reflection_answer', answer);
 	}
-
+  
 	function resetReflection() {
-		reflectionAnswer = null;
-		localStorage.removeItem('tiktok_reflection_answer');
+	  reflectionAnswer = null;
+	  localStorage.removeItem('tiktok_reflection_answer');
 	}
-
+  
 	let count, index, offset, progress;
 	let top = 0;
 	let threshold = 0.5;
 	let bottom = 0.9;
-
+  
 	const backgroundImages = [
-		'/images/bg1.jpg',
-		'/images/bg2.jpg',
-		'/images/bg3.jpg',
-		'/images/bg4.jpg',
-		'/images/bg5.jpg'
+	  '/images/bg1.jpg',
+	  '/images/bg2.jpg',
+	  '/images/bg3.jpg',
+	  '/images/bg4.jpg',
+	  '/images/bg5.jpg'
 	];
-</script>
-
+  </script>
+  
   <!-- TITLE -->
   <div class="intro-title">
 	<h1>You Deserve a Kind Algorithm</h1>
@@ -93,13 +93,12 @@
   <!-- POLL UI -->
   <div class="poll-section">
 	<h2>
-		{#if selectedOption}
-		  You are with {results[selectedOption]}% of US teens who<br>also use TikTok for "{selectedOption}" per day.
-		{:else}
-		  How much time do you spend on TikTok daily?
-		{/if}
+	  {#if selectedOption}
+		You are with {results[selectedOption]}% of US teens who<br>also use TikTok for "{selectedOption}" per day.
+	  {:else}
+		How much time do you spend on TikTok daily?
+	  {/if}
 	</h2>
-	  
   
 	{#if !selectedOption}
 	  <div class="poll-options">
@@ -109,30 +108,26 @@
 		  </button>
 		{/each}
 	  </div>
-
 	{:else}
-	<div class="poll-graph">
+	  <div class="poll-graph">
 		{#each options as option}
-		<div class="bar-row">
+		  <div class="bar-row">
 			<p class="label">{option}: {results[option]}%</p>
 			<div class="bar-track">
-			<div
+			  <div
 				class="bar-fill"
 				data-fill={results[option]}
-			></div>
+			  ></div>
 			</div>
-		</div>
+		  </div>
 		{/each}
-	</div>
-
-	<button class="reset-button" on:click={resetPoll}>View poll again</button>
+	  </div>
+	  <button class="reset-button" on:click={resetPoll}>View poll again</button>
 	{/if}
-
-
   </div>
-
+  
   <!-- REFLECTION POLL -->
-<div class="reflection-section">
+  <div class="reflection-section">
 	<h2>Do you feel like this is too much<br>time to be spending on TikTok?</h2>
   
 	{#if !reflectionAnswer}
@@ -144,14 +139,22 @@
 	{:else}
 	  <p class="reflection-response">
 		{#if reflectionAnswer === "Yes"}
-		You’re not alone in feeling that you are spending too much time on the app.<br>Throughout the rest of the page, we outline some of the positive corners<br>of TikTok that you can explore to make your time on the app more meaningful.
+		  You’re not alone in feeling that you are spending too much time on the app.<br>Throughout the rest of the page, we outline some of the positive corners<br>of TikTok that you can explore to make your time on the app more meaningful.
 		{:else if reflectionAnswer === "No"}
-		That’s great to hear that's you've been practicing healthy scrolling habits!<br>Throughout the rest of the page, we outline some of the positive corners<br>of TikTok that you can explore to make your time on the app even more meaningful.
+		  That’s great to hear that's you've been practicing healthy scrolling habits!<br>Throughout the rest of the page, we outline some of the positive corners<br>of TikTok that you can explore to make your time on the app even more meaningful.
 		{/if}
 	  </p>
-	  
 	  <button class="reset-button" on:click={resetReflection}>Change answer</button>
 	{/if}
+  </div>
+  
+  <!-- SCROLLER INTRO -->
+  <div class="scroller-intro">
+	<p class="subtitle">
+	  It’s easy to open TikTok for a quick break — and just as easy to look up an hour later, wondering where the time went. If you’ve ever felt caught in that loop, you’re not alone. TikTok is designed to keep you engaged: the For You page is constantly learning from your behavior, delivering content that’s just stimulating enough to make you stay. It’s a carefully engineered scroll trap — one that rewards speed, novelty, and emotional intensity over thoughtfulness or balance. The content that rises to the top tends to provoke strong emotional reactions — fear, outrage, envy — because those are the things that drive views and engagement. This means users are often exposed to a flood of worst-case scenarios, panic-inducing “wellness” trends, and hyper-dramatized interpersonal conflict.
+	  <br><br><br>
+	  The result? A digital environment that often feels addictive, even when we’re not enjoying it. Before we explore what else the app can be, let’s move through the patterns that make TikTok feel overwhelming, manipulative, and hard to escape.
+	</p>
   </div>
   
   <Scroller
@@ -173,39 +176,42 @@
 	  </div>
 	</div>
   
-	<!-- <div slot="foreground" class="scrolling-layer">
-	  {#each Array(5) as _, i}
-		<section><p>Section {i + 1}</p></section>
-	  {/each}
-	</div> -->
-
 	<div slot="foreground" class="scrolling-layer">
-		<section>
-		  <p>
-			TikTok’s endless stream of videos, each tailored to be just engaging enough to keep you swiping, traps users in a cycle of passive consumption known as doom scrolling. What begins as a quick break can stretch into hours of content that chips away at attention spans and emotional regulation. The algorithm doesn’t pause to ask if what it’s showing you is making you feel better — it only knows what keeps you scrolling.
-		  </p>
-		</section>
-		<section>
-		  <p>
-			TikTok creators — knowingly or not — often lean into this, presenting worst-case scenarios, manipulative language, or dramatic storytelling in ways that escalate panic. Whether it’s about global events, health scares, or the supposed dangers of not owning the right products, the app’s quick-hit style means nuance gets flattened in favor of alarm. One minute you’re learning about a new symptom or crisis, and the next you’re being told you urgently need mouth tape, red light masks, ice rollers, or sleep eye patches — all in the name of optimization. Videos that trigger strong emotional reactions, whether fear or FOMO, are more likely to go viral, reinforcing a distorted sense of danger and manufactured necessity.
-		  </p>
-		</section>
-		<section>
-		  <p>
-			The platform is also rife with interpersonal drama — creators calling each other out, fans picking sides, and comment sections spiraling into chaos. What might’ve once been private disagreements are now public spectacles, made for mass consumption and replay value. From Mikayla Nogueira’s “mascara-gate” to the chaotic unraveling of Taylor Frankie Paul’s marriage, personal content becomes collective content. Much of this drama stems not from critical discourse, but from pettiness, clout-chasing, and a need to feed the content machine.
-		  </p>
-		</section>
-		<section>
-		  <p>
-			At the heart of all this is a feedback loop. The more you watch — and especially, the more you engage — the more the algorithm feeds you similar content. That means if you linger on a fear-based video, or react to creator drama, TikTok assumes you want more of it. It becomes easy to get sucked into a corner of the app that feels inescapable. Over time, this can shape your perception of reality: making the world seem more hostile, your peers more performative, and your own attention more fragmented.
-		  </p>
-		</section>
+	  <section>
+		<p>TikTok traps users in a cycle of passive consumption, where hours vanish to endless, bite-sized content.</p>
+	  </section>
+	  <section>
+		<p>Dramatic, fear-based videos rise to the top — not because they’re true, but because they’re addictive.</p>
+	  </section>
+	  <section>
+		<p>Personal drama becomes public spectacle, feeding a content machine that thrives on conflict.</p>
+	  </section>
+	  <section>
+		<p>Engagement creates a feedback loop: the more you react, the more chaos the algorithm sends your way.</p>
+	  </section>
 	</div>
-	  
   </Scroller>
   
-  <PositiveCorners />
+  <div class="scroller-outro">
+	<p class="subtitle">
+	  But TikTok is not one thing. Just as it can create anxiety and disconnection, it also holds space for genuine joy, support, and collective care. You’ll find creators who show up with vulnerability, humor, and generosity — not for clout, but for community. There are corners of the app where people teach each other how to ask for help, share mental health strategies, challenge beauty standards, and fundraise for strangers in crisis.
+	  <br><br><br>
+	  What’s remarkable is that these moments cut through — even in an attention economy that doesn’t reward slowness or sincerity. They remind us that TikTok’s potential isn’t limited to spectacle. It can also connect people across difference, surface shared struggles, and amplify small acts of kindness. So before you close the app in frustration, take a second to see what else is out there. Let’s step into quieter corners of TikTok that offer authenticity, empathy, and a glimpse of what a more human algorithm might look like.
+	</p>
+  </div>
   
+  <PositiveCorners />
+
+  <div class="outro">
+	<p class="subtitle">
+	  You’ve reached the end of the page — but hopefully, not the end of thinking about how TikTok shapes what we see and how we feel. Maybe you came here feeling burned out, overstimulated, or unsure about your relationship with the app. Maybe you’ve recognized your own habits in the loops we described. Or maybe, for the first time in a while, you saw content that made you feel something softer — joy, care, connection.
+	  <br><br><br>
+	  The truth is, algorithms don’t have values — but we do. And every choice we make while we scroll shapes the experience we’re fed. By being intentional about how we engage, by seeking out the good instead of just reacting to the loud, we can carve out kinder corners of even the most chaotic platforms.
+	  <br><br><br>
+	  So next time you open TikTok, take a breath. Skip the noise. Save the video that made you feel understood. Comment something generous. Share something helpful. You deserve a feed that nourishes you, not one that drains you. Let this be your gentle reminder that a more human algorithm begins with how we choose to show up.
+	</p>
+  </div>
+
   <style>
 	.background-layer {
 	  position: relative;
