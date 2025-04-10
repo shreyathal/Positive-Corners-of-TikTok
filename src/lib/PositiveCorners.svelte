@@ -1,5 +1,6 @@
 <script>
   import tiktokData from './tiktokdetails.js';
+  import { onMount } from 'svelte'; 
 
   const emojiMap = {
     advice: " 👩‍🦳 💌",
@@ -18,6 +19,7 @@
   const categories = Object.keys(tiktokData);
 
   let selectedCategory = null;
+  let detailsElement; // Reference to the details div
 
   $: selectedDetails = selectedCategory ? tiktokData[selectedCategory] : null;
   let currentSlide = 0;
@@ -25,6 +27,15 @@
   function selectCategory(category) {
     selectedCategory = category;
     currentSlide = 0;
+    
+    setTimeout(() => {
+      if (detailsElement) {
+        detailsElement.scrollIntoView({ 
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+    }, 100);
   }
 
   function nextSlide() {
@@ -67,7 +78,9 @@
     </div>
 
     {#if selectedDetails}
-      <div class="details" style="background-color: {categoryColors[selectedCategory] || '#f8f8f8'}">
+      <div class="details" 
+           style="background-color: {categoryColors[selectedCategory] || '#f8f8f8'}"
+           bind:this={detailsElement}>
         <h3>{selectedDetails.title}</h3>
         <p><strong>What is it?</strong> {selectedDetails.description}</p>
 
@@ -110,6 +123,7 @@
 </div>
 
 <style>
+  
   button {
     outline: none;
   }
@@ -144,7 +158,6 @@
     margin: 0 auto;
   }
 
- 
   .category-button {
     background-color: #3a2222;
     border: 5px solid transparent;
@@ -226,7 +239,6 @@
     line-height: 1.4;
     color: black;
   }
-
 
   .carousel-container {
     margin: 20px 0;
