@@ -1,12 +1,11 @@
 <script>
   import tiktokData from './tiktokdetails.js';
 
-  // Categories and emojis
   const emojiMap = {
-    advice: "👵👩‍🦳💕",
-    fundraising: "💰❤️🌱",
-    deinfluencing: "👧🚫👑",
-    hopecore: "✨🌈🙏"
+    advice: " 👩‍🦳 💌",
+    fundraising: "🤝💸",
+    deinfluencing: "🚫🧘",
+    hopecore: "🫶✨"
   };
 
   const categoryColors = {
@@ -49,8 +48,20 @@
 
     <div class="category-grid">
       {#each categories as category}
-        <button class="category-button" on:click={() => selectCategory(category)}>
+        <button 
+          class="category-button {selectedCategory === category ? 'selected ' + category : ''}" 
+          on:click={() => selectCategory(category)}
+        >
+        <div class="button-content">
           <span class="emoji-group">{emojiMap[category]}</span>
+          <span class="category-name {selectedCategory === category ? 'visible' : ''}">
+            {category === 'advice' ? 'Advice From Older Women' : 
+             category === 'hopecore' ? 'Hopecore' : 
+             category === 'deinfluencing' ? 'Deinfluencing' : 
+             category === 'fundraising' ? 'Fundraising' : 
+             ''}
+          </span>
+        </div>
         </button>
       {/each}
     </div>
@@ -99,6 +110,10 @@
 </div>
 
 <style>
+  button {
+    outline: none;
+  }
+
   .container {
     display: flex;
     flex-direction: column;
@@ -124,27 +139,64 @@
   .category-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-    max-width: 300px;
+    gap: 30px;
+    max-width: 340px;
     margin: 0 auto;
   }
 
+ 
   .category-button {
     background-color: #3a2222;
-    border: none;
+    border: 5px solid transparent;
     border-radius: 8px;
-    padding: 20px;
+    padding: 45px;
     cursor: pointer;
     aspect-ratio: 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: transform 0.2s, opacity 0.2s;
+    box-sizing: border-box;
   }
 
-  .category-button:hover {
-    transform: scale(1.05);
-    opacity: 0.9;
+  .category-button.selected.advice {
+    border-color: #FF9FBB;
+  }
+
+  .category-button.selected.fundraising {
+    border-color: #8FBE59;
+  }
+
+  .category-button.selected.deinfluencing {
+    border-color: #7D9AF1;
+  }
+
+  .category-button.selected.hopecore {
+    border-color: #F8C622;
+  }
+
+  .button-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 10px;
+  }
+
+  .category-name {
+    font-size: 14px;
+    opacity: 0;
+    height: 0;
+    overflow: hidden;
+    transition: opacity 0.3s, height 0.3s;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+  }
+
+  .category-name.visible {
+    opacity: 1;
+    height: auto;
   }
 
   .emoji-group {
@@ -175,7 +227,7 @@
     color: black;
   }
 
-  /* Carousel Styles */
+
   .carousel-container {
     margin: 20px 0;
     padding: 10px;
