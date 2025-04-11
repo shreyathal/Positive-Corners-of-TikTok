@@ -88,10 +88,10 @@
 	let bottom = 0.9;
   
 	const backgroundImages = [
-	  'public/bg1.jpg',
-	  'public/bg2.jpg', 
-	  'public/bg3.jpg',
-	  'public/bg4.jpg'
+	  'public/bgnew1.png',
+	  'public/bgnew2.png', 
+	  'public/bgnew3.png',
+	  'public/bgnew4.png'
 	]; 
 	
 	// Video ended handler
@@ -212,15 +212,15 @@
     <div slot="background" class="background-layer">
       <div class="background-image">
         {#if index === 0}
-          <img src="public/bg1.jpg" alt="Background 1" />
+          <img src="public/bgnew1.png" alt="Background 1" />
         {:else if index === 1}
-          <img src="public/bg2.jpg" alt="Background 2" />
+          <img src="public/bgnew2.png" alt="Background 2" />
         {:else if index === 2}
-          <img src="public/bg3.jpg" alt="Background 3" />
+          <img src="public/bgnew3.png" alt="Background 3" />
         {:else if index === 3}
-          <img src="public/bg4.jpg" alt="Background 4" />
+          <img src="public/bgnew4.png" alt="Background 4" />
         {:else}
-          <img src="/public/bg1.jpg" alt="Default Background" />
+          <img src="public/bgnew1.png" alt="Default Background" />
         {/if}
       </div>
     </div>
@@ -281,25 +281,34 @@
     height: 100%;
     object-fit: contain;
   }
-
   .background-layer {
-  position: fixed;
+  position: relative;
   top: 0;
-  left: 90;
-  width: 100vw;
+  left: 0;
+  width: 50vw; 
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   pointer-events: none;
   z-index: -1;
-  overflow: hidden; /* Add this to prevent overflow */
+  overflow: hidden;
 }
 
-  .background-image {
-    width: 100%;
-    height: 100%;
-  }
+.background-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.background-image img {
+  max-width: 100vw;
+  height: 100%;
+  object-fit: cover;
+}
+
  
   .scrolling-layer {
     pointer-events: none;
@@ -429,4 +438,9 @@
   .scroll-anchor {
     scroll-margin-top: 1.5rem;
   }
+
+  .scroller-outro{
+    margin-top: 150px; 
+  }
+
 </style>
