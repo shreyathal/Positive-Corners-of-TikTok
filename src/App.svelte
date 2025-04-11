@@ -209,13 +209,13 @@
     <div slot="background" class="background-layer">
       <div class="background-image">
         {#if index === 0}
-          <img src="/public/bg1.jpg" alt="Background 1" />
+          <img src="public/bg1.jpg" alt="Background 1" />
         {:else if index === 1}
-          <img src="/public/bg2.jpg" alt="Background 2" />
+          <img src="public/bg2.jpg" alt="Background 2" />
         {:else if index === 2}
-          <img src="/public/bg3.jpg" alt="Background 3" />
+          <img src="public/bg3.jpg" alt="Background 3" />
         {:else if index === 3}
-          <img src="/public/bg4.jpg" alt="Background 4" />
+          <img src="public/bg4.jpg" alt="Background 4" />
         {:else}
           <img src="/public/bg1.jpg" alt="Default Background" />
         {/if}
@@ -280,28 +280,24 @@
   }
 
   .background-layer {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    pointer-events: none;
-  }
+  position: fixed;
+  top: 0;
+  left: 90;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+  z-index: -1;
+  overflow: hidden; /* Add this to prevent overflow */
+}
 
   .background-image {
     width: 100%;
     height: 100%;
   }
-
-  .background-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  
+ 
   .scrolling-layer {
     pointer-events: none;
   }
