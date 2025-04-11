@@ -87,7 +87,12 @@
 	let threshold = 0.5;
 	let bottom = 0.9;
   
-	const backgroundImages = ['public/hfuyf.jpg']; 
+	const backgroundImages = [
+	  'public/bg1.jpg',
+	  'public/bg2.jpg', 
+	  'public/bg3.jpg',
+	  'public/bg4.jpg'
+	]; 
 	
 	// Video ended handler
 	function handleVideoEnd() {
@@ -202,10 +207,19 @@
     bind:progress
   >
     <div slot="background" class="background-layer">
-      <div
-        class="background-image"
-        style="background-image: url({backgroundImages[index] || backgroundImages[0]});"
-      ></div>
+      <div class="background-image">
+        {#if index === 0}
+          <img src="/public/bg1.jpg" alt="Background 1" />
+        {:else if index === 1}
+          <img src="/public/bg2.jpg" alt="Background 2" />
+        {:else if index === 2}
+          <img src="/public/bg3.jpg" alt="Background 3" />
+        {:else if index === 3}
+          <img src="/public/bg4.jpg" alt="Background 4" />
+        {:else}
+          <img src="/public/bg1.jpg" alt="Default Background" />
+        {/if}
+      </div>
     </div>
 
     <div slot="foreground" class="scrolling-layer">
@@ -266,32 +280,27 @@
   }
 
   .background-layer {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: -1;
-  overflow: hidden;
-  display: flex; /* center using flex */
-  justify-content: center;
-  align-items: center;
-  pointer-events: none;
-}
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+  }
 
-.background-image {
-  width: 100%;
-  height: 100%;
-  background-image: url('/bg1.png');
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: contain; /* keeps whole image visible */
-  transition: background-image 0.6s ease-in-out;
-}
+  .background-image {
+    width: 100%;
+    height: 100%;
+  }
 
-
-
-
+  .background-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
   
   .scrolling-layer {
     pointer-events: none;
@@ -310,7 +319,7 @@
 
   section p {
     max-width: 600px;
-    width: 90%; /* fallback to screen width on mobile */
+    width: 90%;
     font-size: 1.2rem;
     line-height: 1.6;
     background-color: rgba(0, 0, 0, 0.7);
@@ -398,7 +407,7 @@
   .bar-track {
     width: 100%;
     height: 24px;
-    background-color: rgba(255, 105, 180, 0.15); /* light pink */
+    background-color: rgba(255, 105, 180, 0.15);
     border-radius: 12px;
     overflow: hidden;
     position: relative;
