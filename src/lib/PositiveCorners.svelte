@@ -108,10 +108,15 @@
               <div class="slides-container">
                 {#each selectedDetails.examples as example, i}
                   <div class="slide {i === currentSlide ? 'active' : ''}">
-                    <div class="video-placeholder">
-                      <div class="placeholder-icon">▶️</div>
-                      <p>{example}</p>
-                    </div>
+                    <video 
+                      controls 
+                      preload="metadata" 
+                      style="max-width: 100%; height: auto; border-radius: 12px;"
+                    >
+                      <source src={example} type="video/mp4" />
+                      <track kind="captions" src="" label="English captions" />
+                      Your browser does not support the video tag.
+                    </video>
                   </div>
                 {/each}
               </div>
@@ -219,20 +224,15 @@
     opacity: 1;
   }
 
-  .video-placeholder {
-  width: 60vw; /* controls actual width */
-  height: calc(200px * 16 / 9); /* 9:16 ratio */
-  background-color: rgba(0, 0, 0, 0.1);
-  border-radius: 6px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  border: 2px dashed rgba(0, 0, 0, 0.2);
+  video {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  display: block;
   margin: 0 auto;
+  border-radius: 12px;
   }
-
+  
   .indicator {
     width: 20px;
     height: 20px;
@@ -262,7 +262,7 @@
   background-color: #000000;
   border: 7px solid transparent;
   border-radius: 8px;
-  padding: 30px;
+  padding: 20px;
   cursor: pointer;
   aspect-ratio: 1;
   display: flex;
