@@ -21,19 +21,21 @@
   let selectedCategory = null;
   let detailsElement; // Reference to the details div
   let exploredCategories = new Set();
+  let videoRefs = [];
 
   $: selectedDetails = selectedCategory ? tiktokData[selectedCategory] : null;
   let currentSlide = 0;
 
-  function selectCategory(category) {
+function selectCategory(category) {
   selectedCategory = category;
   currentSlide = 0;
 
-  // Add to explored set
-  exploredCategories.add(category);
-  sessionStorage.setItem('explored_positive_corners', JSON.stringify([...exploredCategories]));
+  // ✅ Create a new Set so Svelte sees the change
+  exploredCategories = new Set(exploredCategories).add(category);
 
-  // Scroll to details
+  // sessionStorage.setItem('explored_positive_corners', JSON.stringify([...exploredCategories]));
+
+  // Scroll logic (keep as is)
   setTimeout(() => {
     if (detailsElement) {
       detailsElement.scrollIntoView({ 
@@ -43,6 +45,7 @@
     }
   }, 100);
 }
+
 
   function nextSlide() {
     currentSlide = (currentSlide + 1) % selectedDetails.examples.length;
@@ -56,20 +59,27 @@
     currentSlide = index;
   }
 
-  // On mount, load explored categories from sessionStorage
-  onMount(() => {
-    const saved = sessionStorage.getItem('explored_positive_corners');
-    if (saved) {
-      exploredCategories = new Set(JSON.parse(saved));
-    }
-  });
+  $: {
+  if (videoRefs.length > 0) {
+    videoRefs.forEach((video, index) => {
+      if (video) {
+        if (index === currentSlide) {
+          video.play().catch(e => console.warn("Autoplay blocked", e));
+        } else {
+          video.pause();
+          video.currentTime = 0; // optional: reset playback
+        }
+      }
+    });
+  }
+}
 
 </script>
 
 <div class="container">
 
   <div class="section">
-    <h2>Choose a positive corner of TikTok to explore:</h2>
+    <h2 style="margin-top: 100px;">Choose a positive corner of TikTok to explore:</h2>
 
     <div class="category-grid">
       {#each categories as category}
@@ -107,7 +117,7 @@
 
               {#key selectedCategory}
                 <div class="slides-container">
-                  {#each selectedDetails.examples as example, i}
+                  <!-- {#each selectedDetails.examples as example, i}
                     <div class="slide {i === currentSlide ? 'active' : ''}">
                       <video 
                         controls 
@@ -118,6 +128,20 @@
                           height: 450px;
                           width: 300px;
                           border-radius: 12px;"
+                      >
+                        <source src={example} type="video/mp4" />
+                        <track kind="captions" src="" label="English captions" />
+                        Your browser does not support the video tag.
+                      </video>
+                    </div>
+                  {/each} -->
+                  {#each selectedDetails.examples as example, i}
+                    <div class="slide {i === currentSlide ? 'active' : ''}">
+                      <video
+                        bind:this={videoRefs[i]}
+                        controls
+                        preload="metadata"
+                        style="max-height: 500px; max-width: 300px; height: 450px; width: 300px; border-radius: 12px;"
                       >
                         <source src={example} type="video/mp4" />
                         <track kind="captions" src="" label="English captions" />
@@ -248,7 +272,8 @@
   max-width: 500px;
   margin: 0 auto;
   width: 95%;
-  margin-top: 30px;
+  margin-top: 50px;
+  margin-bottom: 100px;
 }
 
 .category-button {

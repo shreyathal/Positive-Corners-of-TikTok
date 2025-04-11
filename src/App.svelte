@@ -126,6 +126,9 @@
 </div>
   
 <!-- POLL UI -->
+
+ <!--svelte allows pieces like this to be their own file component- you could name this 
+ poll.svelte in the lib file, then call it back in over here by doing <poll/>.Same goes for scrollytelling content! xoxo Bethany-->
 <div class="poll-section">
   <h2 bind:this={pollResultRef} class="scroll-anchor">
     {#if selectedOption}
