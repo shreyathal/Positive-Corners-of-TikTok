@@ -217,7 +217,7 @@
         {:else if index === 3}
           <img src="public/bgnew4.jpg" alt="Background 4" />
         {:else}
-          <img src="/public/bgnew1.jpg" alt="Default Background" />
+          <img src="public/bgnew1.jpg" alt="Default Background" />
         {/if}
       </div>
     </div>
