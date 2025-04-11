@@ -87,13 +87,7 @@
 	let threshold = 0.5;
 	let bottom = 0.9;
   
-	const backgroundImages = [
-	  '/images/bg1.jpg',
-	  '/images/bg2.jpg',
-	  '/images/bg3.jpg',
-	  '/images/bg4.jpg',
-	  '/images/bg5.jpg'
-	];
+	const backgroundImages = ['public/hfuyf.jpg']; 
 	
 	// Video ended handler
 	function handleVideoEnd() {
@@ -109,7 +103,7 @@
 {#if showVideo}
   <div class="video-container">
     <video 
-      src="openingvid.mp4" 
+      src="public/intronew.mp4" 
       autoplay
       muted
       playsinline
@@ -189,7 +183,6 @@
 {/if}
   
 {#if selectedOption && reflectionAnswer}
-  <!-- Rest of your content remains the same -->
   <!-- SCROLLER INTRO -->
   <div class="scroller-intro">
     <p class="subtitle">
@@ -213,11 +206,8 @@
         class="background-image"
         style="background-image: url({backgroundImages[index] || backgroundImages[0]});"
       ></div>
-      <div class="text-overlay">
-        <h2>A collage image that has a gap in the middle (to make text readable) that has things from TikTok</h2>
-      </div>
     </div>
-  
+
     <div slot="foreground" class="scrolling-layer">
       <section>
         <p>TikTok traps users in a cycle of passive consumption, where hours vanish to endless, bite-sized content.</p>
@@ -276,32 +266,32 @@
   }
 
   .background-layer {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-  }
-  
-  .background-image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-    z-index: 1;
-    transition: background-image 0.6s ease-in-out;
-  }
-  
-  .text-overlay {
-    position: relative;
-    z-index: 2;
-    text-align: center;
-    padding-top: 30vh;
-    color: white;
-    text-shadow: 0 0 10px black;
-  }
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  overflow: hidden;
+  display: flex; /* center using flex */
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+}
+
+.background-image {
+  width: 100%;
+  height: 100%;
+  background-image: url('/bg1.png');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain; /* keeps whole image visible */
+  transition: background-image 0.6s ease-in-out;
+}
+
+
+
+
   
   .scrolling-layer {
     pointer-events: none;
@@ -431,5 +421,4 @@
   .scroll-anchor {
     scroll-margin-top: 1.5rem;
   }
-  
 </style>
