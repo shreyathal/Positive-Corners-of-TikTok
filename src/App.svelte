@@ -88,10 +88,10 @@
 	let bottom = 0.9;
   
 	const backgroundImages = [
-	  'public/bgnew1.jpg',
-	  'public/bgnew2.jpg', 
-	  'public/bgnew3.jpg',
-	  'public/bgnew4.jpg'
+	  'public/bgnew1.png',
+	  'public/bgnew2.png', 
+	  'public/bgnew3.png',
+	  'public/bgnew4.png'
 	]; 
 	
 	// Video ended handler
@@ -209,15 +209,15 @@
     <div slot="background" class="background-layer">
       <div class="background-image">
         {#if index === 0}
-          <img src="public/bgnew1.jpg" alt="Background 1" />
+          <img src="public/bgnew1.png" alt="Background 1" />
         {:else if index === 1}
-          <img src="public/bgnew2.jpg" alt="Background 2" />
+          <img src="public/bgnew2.png" alt="Background 2" />
         {:else if index === 2}
-          <img src="public/bgnew3.jpg" alt="Background 3" />
+          <img src="public/bgnew3.png" alt="Background 3" />
         {:else if index === 3}
-          <img src="public/bgnew4.jpg" alt="Background 4" />
+          <img src="public/bgnew4.png" alt="Background 4" />
         {:else}
-          <img src="public/bgnew1.jpg" alt="Default Background" />
+          <img src="public/bgnew1.png" alt="Default Background" />
         {/if}
       </div>
     </div>
@@ -282,7 +282,7 @@
   position: relative;
   top: 0;
   left: 0;
-  width: 60vw; 
+  width: 50vw; 
   height: 100vh;
   display: flex;
   justify-content: center;
