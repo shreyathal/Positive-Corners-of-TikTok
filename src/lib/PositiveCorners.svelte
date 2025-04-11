@@ -103,26 +103,34 @@
             <h2> Featured Videos</h2>
 
             <div class="carousel">
-              <button type="button" class="carousel-nav prev" on:click={prevSlide}>❮</button>
+              <button class="carousel-nav prev" on:click={prevSlide}>❮</button>
 
-              <div class="slides-container">
-                {#each selectedDetails.examples as example, i}
-                  <div class="slide {i === currentSlide ? 'active' : ''}">
-                    <video 
-                      controls 
-                      preload="metadata" 
-                      style="max-width: 100%; height: auto; border-radius: 12px;"
-                    >
-                      <source src={example} type="video/mp4" />
-                      <track kind="captions" src="" label="English captions" />
-                      Your browser does not support the video tag.
-                    </video>
-                  </div>
-                {/each}
-              </div>
+              {#key selectedCategory}
+                <div class="slides-container">
+                  {#each selectedDetails.examples as example, i}
+                    <div class="slide {i === currentSlide ? 'active' : ''}">
+                      <video 
+                        controls 
+                        preload="metadata"
+                        style="
+                          max-height: 500px; 
+                          max-width: 300px;
+                          height: 450px;
+                          width: 300px;
+                          border-radius: 12px;"
+                      >
+                        <source src={example} type="video/mp4" />
+                        <track kind="captions" src="" label="English captions" />
+                        Your browser does not support the video tag.
+                      </video>
+                    </div>
+                  {/each}
+                </div>
+              {/key}
 
-              <button type="button" class="carousel-nav next" on:click={nextSlide}>❯</button>
+              <button class="carousel-nav next" on:click={nextSlide}>❯</button>
             </div>
+            
 
             <div class="carousel-indicators">
               {#each selectedDetails.examples as _, i}
@@ -178,60 +186,45 @@
   margin-top: 60px;
   margin-bottom: 60px;
   max-width: 95%; 
+  width: 400px; 
+  height: 680px; 
   margin-left: auto;
   margin-right: auto;
+  align-items: center;
+  border-radius: 37px; /* ← Add this line */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* optional for depth */
+  display: flex; 
+  flex-direction: column;
 }
 
   .carousel-container {
-  margin: 20px 0;
-  padding: 10px;
-  background-color: rgba(255, 255, 255, 0.3);
-  border-radius: 6px;
-  height: 500px; /* Increase the height of the whole container */
+  background-color: rgba(255, 255, 255, 0.3); 
+  height: 550px;
+  width: 350px; 
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  }
-
-  .carousel {
-    position: relative;
-    display: flex;
-    align-items: center;
-    height: 150px;
-  }
-
-  .slides-container {
-    flex: 1;
-    position: relative;
-    height: 100%;
-    overflow: hidden;
+  border-radius: 26px; 
   }
 
   .slide {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .slide.active {
-    opacity: 1;
-  }
-
-  video {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  max-width: 300px;
-  height: auto;
-  display: block;
-  margin: 0 auto;
-  border-radius: 12px;
-  }
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.slide.active {
+  opacity: 1;
+  pointer-events: auto;
+  position: relative;
+}
   
   .indicator {
     width: 20px;
@@ -303,6 +296,32 @@
   color: black;
   font-size: 20px;
   margin-bottom: 0.5rem;
+}
+
+.carousel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: auto;
+}
+
+.slides-container {
+  flex: 0 1 auto;
+  position: relative;
+  width: 300px;
+  height: auto;
+  overflow: hidden;
+}
+
+.carousel-nav {
+  font-size: 2rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  user-select: none;
+  color: black;
 }
 
 </style>
