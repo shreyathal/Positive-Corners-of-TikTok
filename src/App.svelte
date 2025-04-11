@@ -358,7 +358,7 @@
   }
   
   .reset-button:hover {
-    background-color: white;
+    background-color: #ff69b4;
     color: black;
   }
   
@@ -428,9 +428,8 @@
     margin: 4rem 1rem 12rem;
   }
 
-  /* No unused selectors */
-
   .scroll-anchor {
     scroll-margin-top: 1.5rem;
   }
+  
 </style>

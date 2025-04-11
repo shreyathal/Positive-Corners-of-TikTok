@@ -20,23 +20,29 @@
 
   let selectedCategory = null;
   let detailsElement; // Reference to the details div
+  let exploredCategories = new Set();
 
   $: selectedDetails = selectedCategory ? tiktokData[selectedCategory] : null;
   let currentSlide = 0;
 
   function selectCategory(category) {
-    selectedCategory = category;
-    currentSlide = 0;
-    
-    setTimeout(() => {
-      if (detailsElement) {
-        detailsElement.scrollIntoView({ 
-          behavior: 'smooth',
-          block: 'start'
-        });
-      }
-    }, 100);
-  }
+  selectedCategory = category;
+  currentSlide = 0;
+
+  // Add to explored set
+  exploredCategories.add(category);
+  sessionStorage.setItem('explored_positive_corners', JSON.stringify([...exploredCategories]));
+
+  // Scroll to details
+  setTimeout(() => {
+    if (detailsElement) {
+      detailsElement.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  }, 100);
+}
 
   function nextSlide() {
     currentSlide = (currentSlide + 1) % selectedDetails.examples.length;
@@ -49,13 +55,21 @@
   function goToSlide(index) {
     currentSlide = index;
   }
+
+  // On mount, load explored categories from sessionStorage
+  onMount(() => {
+    const saved = sessionStorage.getItem('explored_positive_corners');
+    if (saved) {
+      exploredCategories = new Set(JSON.parse(saved));
+    }
+  });
+
 </script>
 
 <div class="container">
-  <h1>Chapter 3</h1>
 
   <div class="section">
-    <h2>Positive Influence / Happy Side of TikTok</h2>
+    <h2>Choose a positive corner of TikTok to explore:</h2>
 
     <div class="category-grid">
       {#each categories as category}
@@ -65,7 +79,7 @@
         >
         <div class="button-content">
           <span class="emoji-group">{emojiMap[category]}</span>
-          <span class="category-name {selectedCategory === category ? 'visible' : ''}">
+          <span class="category-name {exploredCategories.has(category) ? 'visible' : ''}">
             {category === 'advice' ? 'Advice From Older Women' : 
              category === 'hopecore' ? 'Hopecore' : 
              category === 'deinfluencing' ? 'Deinfluencing' : 
@@ -81,12 +95,12 @@
       <div class="details" 
            style="background-color: {categoryColors[selectedCategory] || '#f8f8f8'}"
            bind:this={detailsElement}>
-        <h3>{selectedDetails.title}</h3>
-        <p><strong>What is it?</strong> {selectedDetails.description}</p>
+        <h2 class="corner-title">{selectedDetails.title}</h2>
+        <p class="corner-description">{selectedDetails.description}</p>
 
         {#if selectedDetails.examples.length > 0}
           <div class="carousel-container">
-            <h4>Featured Videos</h4>
+            <h2> Featured Videos</h2>
 
             <div class="carousel">
               <button type="button" class="carousel-nav prev" on:click={prevSlide}>❮</button>
@@ -123,52 +137,9 @@
 </div>
 
 <style>
-  
+
   button {
     outline: none;
-  }
-
-  .container {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    padding: 20px;
-  }
-
-  h1 {
-    font-size: 24px;
-    font-weight: bold;
-    margin: 40px 0;
-  }
-
-  h2 {
-    font-size: 18px;
-    margin: 20px 0;
-  }
-
-  .section {
-    margin: 20px 0;
-  }
-
-  .category-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 30px;
-    max-width: 340px;
-    margin: 0 auto;
-  }
-
-  .category-button {
-    background-color: #3a2222;
-    border: 5px solid transparent;
-    border-radius: 8px;
-    padding: 45px;
-    cursor: pointer;
-    aspect-ratio: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-sizing: border-box;
   }
 
   .category-button.selected.advice {
@@ -187,90 +158,41 @@
     border-color: #F8C622;
   }
 
-  .button-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    gap: 10px;
-  }
-
-  .category-name {
-    font-size: 14px;
-    opacity: 0;
-    height: 0;
-    overflow: hidden;
-    transition: opacity 0.3s, height 0.3s;
-    text-align: center;
-    color: white;
-    font-weight: bold;
-  }
-
   .category-name.visible {
     opacity: 1;
     height: auto;
   }
 
   .emoji-group {
-    font-size: 24px;
+    font-size: 55px;
   }
 
   .details {
-    border-radius: 8px;
-    padding: 20px;
-    margin-top: 20px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  }
-
-  h3 {
-    margin-top: 0;
-    color: #3a2222;
-  }
-
-  h4 {
-    margin: 15px 0 10px 0;
-    color: #3a2222;
-    text-align: center;
-  }
-
-  p {
-    margin: 10px 0;
-    line-height: 1.4;
-    color: black;
-  }
+  gap: 20px;
+  padding: 1rem;
+  margin-top: 60px;
+  margin-bottom: 60px;
+  max-width: 95%; 
+  margin-left: auto;
+  margin-right: auto;
+}
 
   .carousel-container {
-    margin: 20px 0;
-    padding: 10px;
-    background-color: rgba(255, 255, 255, 0.3);
-    border-radius: 6px;
+  margin: 20px 0;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 6px;
+  height: 500px; /* Increase the height of the whole container */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   }
 
   .carousel {
     position: relative;
     display: flex;
     align-items: center;
-    height: 300px;
-  }
-
-  .carousel-nav {
-    background: rgba(0, 0, 0, 0.7);
-    border: none;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 2;
-    font-size: 16px;
-    padding: 0;
-  }
-
-  .carousel-nav:hover {
-    background: rgba(0, 0, 0, 0.9);
+    height: 150px;
   }
 
   .slides-container {
@@ -298,40 +220,89 @@
   }
 
   .video-placeholder {
-    width: 60%;
-    height: 90%;
-    background-color: rgba(0, 0, 0, 0.1);
-    border-radius: 6px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    border: 2px dashed rgba(0, 0, 0, 0.2);
-  }
-
-  .placeholder-icon {
-    font-size: 24px;
-  }
-
-  .carousel-indicators {
-    display: flex;
-    justify-content: center;
-    margin-top: 10px;
-    gap: 8px;
+  width: 60vw; /* controls actual width */
+  height: calc(200px * 16 / 9); /* 9:16 ratio */
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border: 2px dashed rgba(0, 0, 0, 0.2);
+  margin: 0 auto;
   }
 
   .indicator {
-    width: 10px;
-    height: 10px;
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
     background-color: rgba(0, 0, 0, 0.2);
     cursor: pointer;
     border: none;
     padding: 0;
+    margin-top: 15px; 
   }
 
   .indicator.active {
     background-color: rgba(0, 0, 0, 0.6);
   }
+
+  .category-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  max-width: 500px;
+  margin: 0 auto;
+  width: 95%;
+  margin-top: 30px;
+}
+
+.category-button {
+  background-color: #000000;
+  border: 7px solid transparent;
+  border-radius: 8px;
+  padding: 30px;
+  cursor: pointer;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+}
+
+.category-name {
+  font-size: 20px;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
+  transition: opacity 0.3s ease, height 0.3s ease;
+  max-width: 100%;
+  word-break: break-word;
+}
+
+.corner-title {
+  font-size: 22px;
+  margin: 0 0 0.3rem 0;
+  color: black;
+}
+
+.corner-description {
+  font-size: 16px;
+  margin: 0;
+  color: black;
+  line-height: 1.4;
+}
+
+.details h2 {
+  color: black;
+  font-size: 20px;
+  margin-bottom: 0.5rem;
+}
+
 </style>
