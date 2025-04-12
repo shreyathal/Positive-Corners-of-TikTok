@@ -19,7 +19,7 @@
   const categories = Object.keys(tiktokData);
 
   let selectedCategory = null;
-  let detailsElement; // Reference to the details div
+  let detailsElement; 
   let exploredCategories = new Set();
   let videoRefs = [];
 
@@ -29,8 +29,6 @@
 function selectCategory(category) {
   selectedCategory = category;
   currentSlide = 0;
-
-  // ✅ Create a new Set so Svelte sees the change
   exploredCategories = new Set(exploredCategories).add(category);
 
   setTimeout(() => {
@@ -64,7 +62,7 @@ function selectCategory(category) {
           video.play().catch(e => console.warn("Autoplay blocked", e));
         } else {
           video.pause();
-          video.currentTime = 0; // optional: reset playback
+          video.currentTime = 0; 
         }
       }
     });
@@ -99,7 +97,7 @@ function selectCategory(category) {
     </div>
 
     {#if selectedDetails}
-      <div class="details" 
+      <div class="details scroll-anchor"
            style="background-color: {categoryColors[selectedCategory] || '#f8f8f8'}"
            bind:this={detailsElement}>
         <h2 class="corner-title">{selectedDetails.title}</h2>
@@ -120,7 +118,11 @@ function selectCategory(category) {
                         bind:this={videoRefs[i]}
                         controls
                         preload="metadata"
-                        style="max-height: 500px; max-width: 300px; height: 450px; width: 300px; border-radius: 12px;"
+                        style="
+                          width: 350px;
+                          height: 450px;
+                          max-width: 100%;
+                          border-radius: 12px;"
                       >
                         <source src={example} type="video/mp4" />
                         <track kind="captions" src="" label="English captions" />
@@ -155,7 +157,7 @@ function selectCategory(category) {
 <style>
 
   button {
-    outline: none;
+    outline: white;
   }
 
   .category-button.selected.advice {
@@ -183,27 +185,28 @@ function selectCategory(category) {
     font-size: 55px;
   }
 
-  .details {
+.details {
   gap: 20px;
-  padding: 1rem;
+  padding: 0.75rem;
   margin-top: 60px;
   margin-bottom: 60px;
-  max-width: 95%; 
-  width: 400px; 
-  height: 680px; 
+  max-width: 95%;
+  width: 400px;   
+  height: 680px;  
   margin-left: auto;
   margin-right: auto;
   align-items: center;
-  border-radius: 37px; /* ← Add this line */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* optional for depth */
-  display: flex; 
+  border-radius: 30px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
   flex-direction: column;
+  transform: scale(0.9);
 }
 
   .carousel-container {
   background-color: rgba(255, 255, 255, 0.3); 
-  height: 550px;
-  width: 350px; 
+  width: 350px;  
+  height: 540px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -270,6 +273,10 @@ function selectCategory(category) {
   max-width: 100%;
 }
 
+.category-button:hover {
+      background-color: #61636a;
+}
+
 .category-name {
   font-size: 20px;
   color: white;
@@ -298,7 +305,7 @@ function selectCategory(category) {
 
 .details h2 {
   color: black;
-  font-size: 20px;
+  font-size: 18px;
   margin-bottom: 0.5rem;
 }
 
@@ -326,6 +333,10 @@ function selectCategory(category) {
   padding: 10px;
   user-select: none;
   color: black;
+}
+
+.scroll-anchor {
+  scroll-margin-top: 50px;
 }
 
 </style>
