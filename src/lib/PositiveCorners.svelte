@@ -33,9 +33,6 @@ function selectCategory(category) {
   // ✅ Create a new Set so Svelte sees the change
   exploredCategories = new Set(exploredCategories).add(category);
 
-  // sessionStorage.setItem('explored_positive_corners', JSON.stringify([...exploredCategories]));
-
-  // Scroll logic (keep as is)
   setTimeout(() => {
     if (detailsElement) {
       detailsElement.scrollIntoView({ 
@@ -76,10 +73,10 @@ function selectCategory(category) {
 
 </script>
 
-<div class="container">
+<div class="container" style="margin-bottom: 150px;">
 
   <div class="section">
-    <h2 style="margin-top: 100px;">Choose a positive corner of TikTok to explore:</h2>
+    <h2 style="margin-top: 150px;">Choose a positive corner of TikTok to explore:</h2>
 
     <div class="category-grid">
       {#each categories as category}
@@ -117,24 +114,6 @@ function selectCategory(category) {
 
               {#key selectedCategory}
                 <div class="slides-container">
-                  <!-- {#each selectedDetails.examples as example, i}
-                    <div class="slide {i === currentSlide ? 'active' : ''}">
-                      <video 
-                        controls 
-                        preload="metadata"
-                        style="
-                          max-height: 500px; 
-                          max-width: 300px;
-                          height: 450px;
-                          width: 300px;
-                          border-radius: 12px;"
-                      >
-                        <source src={example} type="video/mp4" />
-                        <track kind="captions" src="" label="English captions" />
-                        Your browser does not support the video tag.
-                      </video>
-                    </div>
-                  {/each} -->
                   {#each selectedDetails.examples as example, i}
                     <div class="slide {i === currentSlide ? 'active' : ''}">
                       <video

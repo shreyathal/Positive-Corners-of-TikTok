@@ -192,7 +192,7 @@
   
 {#if selectedOption && reflectionAnswer}
   <!-- SCROLLER INTRO -->
-  <div class="scroller-intro">
+  <div class="scroller-intro" style="margin-bottom: 150px;">
     <p class="subtitle">
       It's easy to open TikTok for a quick break — and just as easy to look up an hour later, wondering where the time went. If you've ever felt caught in that loop, you're not alone. TikTok is designed to keep you engaged: the For You page is constantly learning from your behavior, delivering content that's just stimulating enough to make you stay. It's a carefully engineered scroll trap — one that rewards speed, novelty, and emotional intensity over thoughtfulness or balance. The content that rises to the top tends to provoke strong emotional reactions — fear, outrage, envy — because those are the things that drive views and engagement. This means users are often exposed to a flood of worst-case scenarios, panic-inducing "wellness" trends, and hyper-dramatized interpersonal conflict.
       <br><br><br>
@@ -241,7 +241,7 @@
     </div>
   </Scroller>
   
-  <div class="scroller-outro">
+  <div class="scroller-outro" style="margin-top: 200px;">
     <p class="subtitle">
       But TikTok is not one thing. Just as it can create anxiety and disconnection, it also holds space for genuine joy, support, and collective care. You'll find creators who show up with vulnerability, humor, and generosity — not for clout, but for community. There are corners of the app where people teach each other how to ask for help, share mental health strategies, challenge beauty standards, and fundraise for strangers in crisis.
       <br><br><br>
