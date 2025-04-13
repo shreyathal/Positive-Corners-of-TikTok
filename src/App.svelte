@@ -10,6 +10,7 @@
   let reflectionAnswer = null;
 	let showVideo = true;
 	let count, index, offset, progress;
+  let nextSectionRef;
 </script>
 
 <!-- VIDEO INTRO -->
@@ -58,21 +59,21 @@
     <p class="subtitle" style="text-align: left;">
       But TikTok is not one thing. Just as it can create anxiety and disconnection, it also holds space for genuine joy, support, and collective care. You'll find creators who show up with vulnerability, humor, and generosity — not for clout, but for community. There are corners of the app where people teach each other how to ask for help, share mental health strategies, challenge beauty standards, and fundraise for strangers in crisis.
       <br><br><br>
-      What's remarkable is that these moments cut through — even in an attention economy that doesn't reward slowness or sincerity. They remind us that TikTok's potential isn't limited to spectacle. It can also connect people across difference, surface shared struggles, and amplify small acts of kindness. So before you close the app in frustration, take a second to see what else is out there. Let's step into quieter corners of TikTok that offer authenticity, empathy, and a glimpse of what a more human algorithm might look like.
+      What's remarkable is that these moments cut through, even in an attention economy that doesn't reward slowness or sincerity. They remind us that TikTok's potential isn't limited to spectacle. It can also connect people across difference, surface shared struggles, and amplify small acts of kindness. So before you close the app in frustration, take a second to see what else is out there. Let's step into quieter corners of TikTok that offer authenticity, empathy, and a glimpse of what a more human algorithm might look like.
     </p>
   </div>
 
 <!-- THE FOUR POSITIVE CORNERS -->
-<PositiveCorners />
+<PositiveCorners nextSectionRef={nextSectionRef}/>
 
 <!-- OUTRO -->
-  <div class="outro">
+  <div class="outro scroll-anchor" bind:this={nextSectionRef}>
     <p class="subtitle" style="text-align: left;">
-      You've reached the end of the page — but hopefully, not the end of thinking about how TikTok shapes what we see and how we feel. Maybe you came here feeling burned out, overstimulated, or unsure about your relationship with the app. Maybe you've recognized your own habits in the loops we described. Or maybe, for the first time in a while, you saw content that made you feel something softer — joy, care, connection.
+      You've reached the end of the page but, hopefully, not the end of thinking about how TikTok shapes what we see and how we feel. Maybe you came here feeling burned out, overstimulated, or unsure about your relationship with the app. Maybe you've recognized your own habits in the loops we described. Or maybe, for the first time in a while, you saw content that made you feel something softer — joy, care, connection.
       <br><br><br>
-      The truth is, algorithms don't have values — but we do. And every choice we make while we scroll shapes the experience we're fed. By being intentional about how we engage, by seeking out the good instead of just reacting to the loud, we can carve out kinder corners of even the most chaotic platforms.
+      The truth is, algorithms don't have values. But we do. And every choice we make while we scroll shapes the experience we're fed. By being intentional about how we engage, by seeking out the good instead of just reacting to the loud, we can carve out kinder corners of even the most chaotic platforms.
       <br><br><br>
-      So next time you open TikTok, take a breath. Skip the noise. Save the video that made you feel understood. Comment something generous. Share something helpful. You deserve a feed that nourishes you, not one that drains you. Let this be your gentle reminder that a more human algorithm begins with how we choose to show up.
+      So next time you open TikTok, take a breath. Skip the noise. Save the video that made you feel understood. Comment something generous. Share something helpful. You deserve a feed that nourishes you. Let this be your gentle reminder that a more human algorithm begins with how we choose to show up.
     </p>
   </div>
 {/if}
@@ -104,6 +105,10 @@
     color: white;
     max-width: 700px;
     margin: 0 auto;
+  }
+
+  .scroll-anchor {
+    scroll-margin-top: 75px;
   }
 
 </style>

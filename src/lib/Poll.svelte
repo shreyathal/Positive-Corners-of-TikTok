@@ -17,6 +17,13 @@
     const reflectionOptions = ["Yes", "No"];
   
     onMount(() => {
+      // Clear previous answers on every page load
+      localStorage.removeItem('tiktok_poll_answer');
+      localStorage.removeItem('tiktok_reflection_answer');
+      
+      selectedOption = null;
+      reflectionAnswer = null;
+
       const saved = localStorage.getItem('tiktok_poll_answer');
       if (saved && options.includes(saved)) {
         selectedOption = saved;
@@ -94,14 +101,22 @@
     {:else}
       <div class="poll-graph">
         {#each options as option}
-          <div class="bar-row">
-            <p class="label">{option}: {results[option]}%</p>
-            <div class="bar-track">
-              <div class="bar-fill" data-fill={results[option]}></div>
-            </div>
+          <div class="bar-row {option === selectedOption ? 'selected' : ''}">
+            <p class="label">
+              {option}: {results[option]}%
+              {#if option === selectedOption}
+                ✔
+              {/if}
+            </p>
+            <div class="bar-track {option === selectedOption ? 'selected' : ''}">
+              <div
+                class="bar-fill {option === selectedOption ? 'highlight' : ''}"
+                data-fill={results[option]}>
+              </div>
+            </div>            
           </div>
         {/each}
-      </div>
+      </div>      
       <button class="reset-button" on:click={resetPoll}>
         View poll again
       </button>
@@ -128,7 +143,7 @@
           {#if reflectionAnswer === "Yes"}
             You're not alone in feeling that you are spending too much time on the app. As you scroll this page, explore the positive corners of TikTok that'll transform your scrolling from mindless to meaningful!
           {:else}
-            That's great to hear that you've been practicing healthy scrolling habits! Throughout the rest of the page, we outline some of the positive corners of TikTok that you can explore to make your time on the app even more meaningful.
+            That's great to hear that you've been practicing healthy scrolling habits!  As you move through the rest of the page, discover corners of TikTok that can make your time on the app feel even more uplifting.
           {/if}
         </p>
         <button class="reset-button" on:click={resetReflection}>
@@ -140,12 +155,16 @@
 
   <style>
 
-.poll-options {
+  .poll-options {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
     max-width: 400px;
     margin: 2rem auto;
+  }
+
+  .poll-options :hover{
+    background-color: #61636a;
   }
   
   .poll-section {
@@ -167,8 +186,7 @@
   }
   
   .reset-button:hover {
-    background-color: #f39fc9;
-    color: black;
+    background-color: #61636a;
   }
 
   .subtitle {
@@ -218,6 +236,19 @@
     transition: width 1s ease;
   }
 
+  .bar-track.selected {
+  background-color: rgba(97, 144, 239, 0.2); /* light blue for selected */
+  }
+
+  .bar-fill.highlight {
+    background-color: #6190ef; /* yellow to contrast pink */
+  }
+
+  .bar-row.selected .label {
+    font-weight: bold;
+    color: #6190ef;
+  }
+
   .reflection-section {
     text-align: center;
     color: white;
@@ -229,4 +260,3 @@
   }
 
   </style>
-  

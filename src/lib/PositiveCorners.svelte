@@ -1,6 +1,5 @@
 <script>
   import tiktokData from './tiktokdetails.js';
-  import { onMount } from 'svelte'; 
 
   const emojiMap = {
     advice: " 👩‍🦳 💌",
@@ -22,6 +21,10 @@
   let detailsElement; 
   let exploredCategories = new Set();
   let videoRefs = [];
+  let gridRef;
+  let headingRef;
+  export let nextSectionRef;
+
 
   $: selectedDetails = selectedCategory ? tiktokData[selectedCategory] : null;
   let currentSlide = 0;
@@ -69,14 +72,28 @@ function selectCategory(category) {
   }
 }
 
+async function collapseDetails() {
+  if (nextSectionRef) {
+    // Wait for scroll to finish using a Promise
+    await new Promise((resolve) => {
+      nextSectionRef.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setTimeout(resolve, 800); // Allow scroll to complete visually (tweak timing as needed)
+    });
+  }
+
+  // Collapse only after scroll is done
+  selectedCategory = null;
+}
+
 </script>
 
 <div class="container" style="margin-bottom: 150px;">
 
   <div class="section">
-    <h2 style="margin-top: 150px;">Choose a positive corner of TikTok to explore:</h2>
+    <!-- <h2 style="margin-top: 150px;">Choose a positive corner of TikTok to explore:</h2> -->
+    <h2 style="margin-top: 150px;" bind:this={headingRef} class="scroll-anchor">Choose a positive corner of TikTok to explore:</h2>
 
-    <div class="category-grid">
+    <div class="category-grid" bind:this={gridRef}>
       {#each categories as category}
         <button 
           class="category-button {selectedCategory === category ? 'selected ' + category : ''}" 
@@ -148,6 +165,20 @@ function selectCategory(category) {
               {/each}
             </div>
           </div>
+
+          <div class="details-buttons">
+
+            <button on:click={() => headingRef.scrollIntoView({ behavior: 'smooth', block: 'start' })}>
+              Explore Other Corners
+            </button>
+            
+          
+            <button on:click={collapseDetails}>
+              Collapse TikToks
+            </button>
+            
+          </div>
+          
         {/if}
       </div>
     {/if}
@@ -155,10 +186,6 @@ function selectCategory(category) {
 </div>
 
 <style>
-
-  button {
-    outline: white;
-  }
 
   .category-button.selected.advice {
     border-color: #FF9FBB;
@@ -178,64 +205,55 @@ function selectCategory(category) {
 
   .category-name.visible {
     opacity: 1;
-    height: auto;
   }
 
   .emoji-group {
     font-size: 55px;
   }
 
-.details {
-  gap: 20px;
-  padding: 0.75rem;
-  margin-top: 60px;
-  margin-bottom: 60px;
-  max-width: 95%;
-  width: 400px;   
-  height: 680px;  
-  margin-left: auto;
-  margin-right: auto;
-  align-items: center;
-  border-radius: 30px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  transform: scale(0.9);
-}
+  .details {
+    gap: 5px;
+    padding: 0.7rem;
+    width: 400px;   
+    height: 750px; 
+    margin-left: auto;
+    margin-right: auto; 
+    align-items: center;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    transform: scale(0.9);
+   
+  }
 
   .carousel-container {
-  background-color: rgba(255, 255, 255, 0.3); 
-  width: 350px;  
-  height: 540px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  border-radius: 26px; 
+    background-color: rgba(255, 255, 255, 0.3); 
+    width: 350px;  
+    height: 560px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 30px; 
+    
   }
 
   .slide {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-.slide.active {
-  opacity: 1;
-  pointer-events: auto;
-  position: relative;
-}
+  .slide.active {
+    opacity: 1;
+    pointer-events: auto;
+    position: relative;
+  }
   
   .indicator {
     width: 20px;
     height: 20px;
-    border-radius: 50%;
+    border-radius: 30px;
     background-color: rgba(0, 0, 0, 0.2);
     cursor: pointer;
     border: none;
@@ -248,95 +266,113 @@ function selectCategory(category) {
   }
 
   .category-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 30px;
-  max-width: 500px;
-  margin: 0 auto;
-  width: 95%;
-  margin-top: 50px;
-  margin-bottom: 100px;
-}
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    max-width: 500px;
+    margin: 0 auto;
+    width: 95%;
+    margin-top: 50px;
+    margin-bottom: 100px;
+  }
 
-.category-button {
-  background-color: #000000;
-  border: 7px solid transparent;
-  border-radius: 8px;
-  padding: 20px;
-  cursor: pointer;
-  aspect-ratio: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-  width: 100%;
-  max-width: 100%;
-}
+  .category-button {
+    background-color: #000000;
+    border: 7px solid transparent;
+    border-radius: 8px;
+    padding: 20px;
+    cursor: pointer;
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+  }
 
-.category-button:hover {
-      background-color: #61636a;
-}
+  .category-button:hover {
+    background-color: #61636a;
+  }
 
-.category-name {
-  font-size: 20px;
-  color: white;
-  font-weight: bold;
-  text-align: center;
-  opacity: 0;
-  height: 0;
-  overflow: hidden;
-  transition: opacity 0.3s ease, height 0.3s ease;
-  max-width: 100%;
-  word-break: break-word;
-}
+  .category-name {
+    font-size: 20px;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    opacity: 0;
+    height: 0;
+    overflow: hidden;
+    transition: opacity 0.3s ease, height 0.3s ease;
+    max-width: 100%;
+    word-break: break-word;
+  }
 
-.corner-title {
-  font-size: 22px;
-  margin: 0 0 0.3rem 0;
-  color: black;
-}
+  .corner-description {
+    font-size: 17px;
+    margin: 0;
+    color: black;
+    line-height: 1.4;
+    margin: 0 1.5rem 0.5rem 1.5rem; /* top, right, bottom, left */
+  }
 
-.corner-description {
-  font-size: 16px;
-  margin: 0;
-  color: black;
-  line-height: 1.4;
-}
+  .details h2 {
+    color: black;
+    font-size: 22px;
+    margin-bottom: 0.5rem;
+  }
 
-.details h2 {
-  color: black;
-  font-size: 18px;
-  margin-bottom: 0.5rem;
-}
+  .carousel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    height: auto;
+  }
 
-.carousel {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  height: auto;
-}
+  .slides-container {
+    flex: 0 1 auto;
+    position: relative;
+    width: 300px;
+    height: auto;
+    overflow: hidden;
+  }
 
-.slides-container {
-  flex: 0 1 auto;
-  position: relative;
-  width: 300px;
-  height: auto;
-  overflow: hidden;
-}
+  .carousel-nav {
+    font-size: 2rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    user-select: none;
+    color: black;
+  }
 
-.carousel-nav {
-  font-size: 2rem;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 10px;
-  user-select: none;
-  color: black;
-}
+  .scroll-anchor {
+    scroll-margin-top: 75px;
+  }
 
-.scroll-anchor {
-  scroll-margin-top: 50px;
-}
+  .details-buttons {
+    margin-top: 1rem;
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+  }
+
+  .details-buttons button {
+    background-color: white;
+    color: black;
+    border: 2px solid black;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .details-buttons button:hover {
+    background-color: #61636a;
+    color: white;
+  }
 
 </style>

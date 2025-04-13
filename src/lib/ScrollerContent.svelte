@@ -37,7 +37,7 @@
   
   <div slot="foreground" class="scrolling-layer">
     <section>
-      <p>TikTok traps users in a cycle of passive consumption, where hours vanish to endless, bite-sized content.</p>
+      <p>TikTok traps you in a cycle of passive consumption, where hours vanish to endless, bite-sized content.</p>
     </section>
     <section>
       <p>Dramatic, fear-based videos rise to the top — not because they're true, but because they're addictive.</p>

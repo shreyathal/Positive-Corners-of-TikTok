@@ -13,7 +13,7 @@
     <div class="link-grid">
       <a class="happy-link" href={tiktokLinks.advice} target="_blank">👵 Advice From Women</a>
       <a class="happy-link" href={tiktokLinks.fundraising} target="_blank">🤝 Fundraising</a>
-      <a class="happy-link" href={tiktokLinks.deinfluencing} target="_blank">🚫 De-influencing</a>
+      <a class="happy-link" href={tiktokLinks.deinfluencing} target="_blank">🚫 Deinfluencing</a>
       <a class="happy-link" href={tiktokLinks.hopecore} target="_blank">🫶 Hopecore</a>
     </div>
   

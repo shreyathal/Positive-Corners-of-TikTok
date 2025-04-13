@@ -22,7 +22,7 @@ export default {
       
     },
     "deinfluencing": {
-      "title": "De-influencing",
+      "title": "Deinfluencing",
       "description": "Countering excessive consumerism by discouraging unnecessary purchases.",
       "examples": [
         "public/tiktoks/v12044gd0000cmsgo1fog65lg0a2um40.mp4",
