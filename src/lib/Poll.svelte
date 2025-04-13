@@ -126,7 +126,7 @@
       {:else}
         <p class="subtitle">
           {#if reflectionAnswer === "Yes"}
-            You're not alone in feeling that you are spending too much time on the app. Throughout the rest of the page, we outline some of the positive corners of TikTok that you can explore to make your time on the app more meaningful.
+            You're not alone in feeling that you are spending too much time on the app. As you scroll this page, explore the positive corners of TikTok that'll transform your scrolling from mindless to meaningful!
           {:else}
             That's great to hear that you've been practicing healthy scrolling habits! Throughout the rest of the page, we outline some of the positive corners of TikTok that you can explore to make your time on the app even more meaningful.
           {/if}
