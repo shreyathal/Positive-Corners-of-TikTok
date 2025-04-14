@@ -1,4 +1,5 @@
 <script>
+  
   import tiktokData from './tiktokdetails.js';
 
   const emojiMap = {
@@ -23,26 +24,27 @@
   let videoRefs = [];
   let gridRef;
   let headingRef;
+  let gridScrollAnchor;
   export let nextSectionRef;
 
 
   $: selectedDetails = selectedCategory ? tiktokData[selectedCategory] : null;
   let currentSlide = 0;
 
-function selectCategory(category) {
-  selectedCategory = category;
-  currentSlide = 0;
-  exploredCategories = new Set(exploredCategories).add(category);
+  function selectCategory(category) {
+    selectedCategory = category;
+    currentSlide = 0;
+    exploredCategories = new Set(exploredCategories).add(category);
 
-  setTimeout(() => {
-    if (detailsElement) {
-      detailsElement.scrollIntoView({ 
-        behavior: 'smooth',
-        block: 'start'
-      });
-    }
-  }, 100);
-}
+    setTimeout(() => {
+      if (detailsElement) {
+        detailsElement.scrollIntoView({ 
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+    }, 100);
+  }
 
 
   function nextSlide() {
@@ -58,41 +60,52 @@ function selectCategory(category) {
   }
 
   $: {
-  if (videoRefs.length > 0) {
-    videoRefs.forEach((video, index) => {
-      if (video) {
-        if (index === currentSlide) {
-          video.play().catch(e => console.warn("Autoplay blocked", e));
-        } else {
-          video.pause();
-          video.currentTime = 0; 
+    if (videoRefs.length > 0) {
+      videoRefs.forEach((video, index) => {
+        if (video) {
+          if (index === currentSlide) {
+            video.play().catch(e => console.warn("Autoplay blocked", e));
+          } else {
+            video.pause();
+            video.currentTime = 0; 
+          }
         }
-      }
-    });
-  }
-}
-
-async function collapseDetails() {
-  if (nextSectionRef) {
-    // Wait for scroll to finish using a Promise
-    await new Promise((resolve) => {
-      nextSectionRef.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      setTimeout(resolve, 800); // Allow scroll to complete visually (tweak timing as needed)
-    });
+      });
+    }
   }
 
-  // Collapse only after scroll is done
-  selectedCategory = null;
-}
+  async function collapseDetails() {
+    if (nextSectionRef) {
+      // Wait for scroll to finish using a Promise
+      await new Promise((resolve) => {
+        nextSectionRef.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        setTimeout(resolve, 800); // Allow scroll to complete visually (tweak timing as needed)
+      });
+    }
+
+    // Collapse only after scroll is done
+    selectedCategory = null;
+  }
+
+  function handleExploreOtherCorners() {
+    const currentVideo = videoRefs[currentSlide];
+    if (currentVideo) {
+      currentVideo.pause();
+    }
+
+    // Scroll to the invisible anchor *above* the grid
+    gridScrollAnchor?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
 
 </script>
 
 <div class="container" style="margin-bottom: 150px;">
 
   <div class="section">
-    <!-- <h2 style="margin-top: 150px;">Choose a positive corner of TikTok to explore:</h2> -->
-    <h2 style="margin-top: 150px;" bind:this={headingRef} class="scroll-anchor">Choose a positive corner of TikTok to explore:</h2>
-
+    <!-- <h2 style="margin-top: 150px;" bind:this={headingRef} class="scroll-anchor">Choose a positive corner of TikTok to explore:</h2> -->
+    <div class="category-scroll-anchor" bind:this={gridScrollAnchor}></div>
+    <h2 style="margin-top: 150px;" bind:this={headingRef}>Choose a positive corner of TikTok to explore:</h2>
+    
     <div class="category-grid" bind:this={gridRef}>
       {#each categories as category}
         <button 
@@ -121,65 +134,56 @@ async function collapseDetails() {
         <p class="corner-description">{selectedDetails.description}</p>
 
         {#if selectedDetails.examples.length > 0}
-          <div class="carousel-container">
-            <h2> Featured Videos</h2>
+        <div class="carousel">
+          <button class="carousel-nav prev" on:click={prevSlide}>❮</button>
 
-            <div class="carousel">
-              <button class="carousel-nav prev" on:click={prevSlide}>❮</button>
-
-              {#key selectedCategory}
-                <div class="slides-container">
-                  {#each selectedDetails.examples as example, i}
-                    <div class="slide {i === currentSlide ? 'active' : ''}">
-                      <video
-                        bind:this={videoRefs[i]}
-                        controls
-                        preload="metadata"
-                        style="
-                          width: 350px;
-                          height: 450px;
+          {#key selectedCategory}
+            <div class="slides-container">
+              {#each selectedDetails.examples as example, i}
+                <div class="slide {i === currentSlide ? 'active' : ''}">
+                  <video
+                    bind:this={videoRefs[i]}
+                    controls
+                    preload="metadata"
+                    style="
+                          height: 570px;
                           max-width: 100%;
-                          border-radius: 12px;"
-                      >
-                        <source src={example} type="video/mp4" />
-                        <track kind="captions" src="" label="English captions" />
-                        Your browser does not support the video tag.
-                      </video>
-                    </div>
-                  {/each}
+                          border-radius: 30px;"
+                  >
+                    <source src={example} type="video/mp4" />
+                    <track kind="captions" src="" label="English captions" />
+                    Your browser does not support the video tag.
+                  </video>
                 </div>
-              {/key}
-
-              <button class="carousel-nav next" on:click={nextSlide}>❯</button>
-            </div>
-            
-
-            <div class="carousel-indicators">
-              {#each selectedDetails.examples as _, i}
-                <button
-                  class="indicator {i === currentSlide ? 'active' : ''}"
-                  on:click={() => goToSlide(i)}
-                  aria-label="Go to slide {i + 1}"
-                  aria-current={i === currentSlide}
-                ></button>
               {/each}
             </div>
-          </div>
+          {/key}
 
-          <div class="details-buttons">
+          <button class="carousel-nav next" on:click={nextSlide}>❯</button>
+        </div>
 
-            <button on:click={() => headingRef.scrollIntoView({ behavior: 'smooth', block: 'start' })}>
-              Explore Other Corners
-            </button>
-            
+        <div class="carousel-indicators">
+          {#each selectedDetails.examples as _, i}
+            <button
+              class="indicator {i === currentSlide ? 'active' : ''}"
+              on:click={() => goToSlide(i)}
+              aria-label="Go to slide {i + 1}"
+              aria-current={i === currentSlide}
+            ></button>
+          {/each}
+        </div>
+
+        <div class="details-buttons">
+          <button on:click={handleExploreOtherCorners}>
+            Explore Other Corners
+          </button>
           
-            <button on:click={collapseDetails}>
-              Collapse TikToks
-            </button>
-            
-          </div>
-          
-        {/if}
+          <button on:click={collapseDetails}>
+            Collapse TikToks
+          </button>
+        </div>
+        
+      {/if}
       </div>
     {/if}
   </div>
@@ -215,7 +219,7 @@ async function collapseDetails() {
     gap: 5px;
     padding: 0.7rem;
     width: 400px;   
-    height: 750px; 
+    height: 820px; 
     margin-left: auto;
     margin-right: auto; 
     align-items: center;
@@ -226,30 +230,39 @@ async function collapseDetails() {
    
   }
 
-  .carousel-container {
-    background-color: rgba(255, 255, 255, 0.3); 
-    width: 350px;  
-    height: 560px;
+  .carousel {
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    border-radius: 30px; 
-    
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 0.25rem;
+  }
+
+  .slides-container {
+    flex: 0 1 auto;
+    position: relative;
+    width: 350px;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .slide {
     position: absolute;
-    display: flex;
+    display: none;  
     justify-content: center;
     align-items: center;
+    width: 100%;
+    height: 100%;
   }
 
   .slide.active {
-    opacity: 1;
-    pointer-events: auto;
+    display: flex; 
     position: relative;
   }
-  
+
   .indicator {
     width: 20px;
     height: 20px;
@@ -258,7 +271,7 @@ async function collapseDetails() {
     cursor: pointer;
     border: none;
     padding: 0;
-    margin-top: 15px; 
+    margin-top: 25px; 
   }
 
   .indicator.active {
@@ -313,29 +326,13 @@ async function collapseDetails() {
     margin: 0;
     color: black;
     line-height: 1.4;
-    margin: 0 1.5rem 0.5rem 1.5rem; /* top, right, bottom, left */
+    margin: 0 1.5rem 0.5rem 1.5rem; 
   }
 
   .details h2 {
     color: black;
     font-size: 22px;
     margin-bottom: 0.5rem;
-  }
-
-  .carousel {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    height: auto;
-  }
-
-  .slides-container {
-    flex: 0 1 auto;
-    position: relative;
-    width: 300px;
-    height: auto;
-    overflow: hidden;
   }
 
   .carousel-nav {
@@ -349,7 +346,7 @@ async function collapseDetails() {
   }
 
   .scroll-anchor {
-    scroll-margin-top: 75px;
+    scroll-margin-top: 20px;
   }
 
   .details-buttons {
@@ -357,6 +354,14 @@ async function collapseDetails() {
     display: flex;
     gap: 1rem;
     justify-content: center;
+  }
+
+  .carousel-nav.prev {
+    margin-right: -9px;
+  }
+
+  .carousel-nav.next {
+    margin-left: -9px;
   }
 
   .details-buttons button {
@@ -373,6 +378,16 @@ async function collapseDetails() {
   .details-buttons button:hover {
     background-color: #61636a;
     color: white;
+  }
+
+  .details-buttons {
+    margin-top: 25px;
+  }
+
+  .category-scroll-anchor {
+    position: relative;
+    top: 20px; 
+    height: 1px;
   }
 
 </style>

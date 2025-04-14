@@ -7,7 +7,7 @@
     };
   </script>
   
-  <div class="conclusion-section" style="margin-top: 100px;">
+  <div class="conclusion-section" style="margin-top: 110px;">
     <h2>Directions to the Happy Corners</h2>
   
     <div class="link-grid">

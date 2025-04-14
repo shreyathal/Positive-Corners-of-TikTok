@@ -3,7 +3,7 @@ import { svelte } from '@sveltejs/vite-plugin-svelte'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/city-explorer-example/', 
+  base: '/positive-TikTok/', 
   plugins: [svelte()],
   build: {
     outDir: 'docs', 

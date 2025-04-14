@@ -22,15 +22,15 @@
   <div slot="background" class="background-layer">
     <div class="background-image">
       {#if index === 0}
-        <img src="public/bgnew1.png" alt="Background 1" />
+        <img src="/positive-TikTok/bgnew1.png" alt="Background 1" />
       {:else if index === 1}
-        <img src="public/bgnew2.png" alt="Background 2" />
+        <img src="/positive-TikTok/bgnew2.png" alt="Background 2" />
       {:else if index === 2}
-        <img src="public/bgnew3.png" alt="Background 3" />
+        <img src="/positive-TikTok/bgnew3.png" alt="Background 3" />
       {:else if index === 3}
-        <img src="public/bgnew4.png" alt="Background 4" />
+        <img src="/positive-TikTok/bgnew4.png" alt="Background 4" />
       {:else}
-        <img src="public/bgnew1.png" alt="Default Background" />
+        <img src="/positive-TikTok/bgnew1.png" alt="Default Background" />
       {/if}
     </div>
   </div>
