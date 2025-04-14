@@ -16,7 +16,7 @@
   <div class="video-container">
     <video 
       bind:this={videoElement}
-      src="public/intronew.mp4" 
+      src="/positive-TikTok/intronew.mp4" 
       autoplay
       muted
       playsinline
