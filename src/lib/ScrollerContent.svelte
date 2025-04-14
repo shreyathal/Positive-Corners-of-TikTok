@@ -114,28 +114,35 @@
   
   /* Mobile adjustments with proper width handling */
   @media (max-width: 768px) {
-    .background-layer {
-      width: 100vw; /* Use full width on mobile */
-      left: 0; /* Ensure proper alignment */
-      position: absolute; /* Position absolutely on mobile */
-      overflow: hidden; /* Prevent overflow */
-    }
-    
-    .background-image {
-      width: 100%;
-      overflow: hidden; /* Prevent overflow */
-    }
-    
-    .background-image img {
-      width: 100%;
-    height: 100%;
-    object-fit: cover;
-      object-position: 60% center !important;  /* Center images */
-    }
-    
-    section p {
-      width: 85%;
-      padding: 1.2rem;
-    }
+
+  .background-layer {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    width: 100vw !important;
+    height: 100vh !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    pointer-events: none;
+    z-index: -1;
+    overflow: hidden;
+    background: none !important; /* just in case background color is pushing it */
   }
+
+  .background-image {
+    width: 100vw !important;
+    height: 100vh !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .background-image img {
+    width: 100vw !important;
+    height: 100vh !important;
+    object-fit: cover !important;
+    object-position: center center !important;
+  }
+}
 </style>
