@@ -113,7 +113,7 @@
   }
   
   /* Mobile adjustments with proper width handling */
-  @media (max-width: 768px) {
+  @media (max-width: 700px) {
 
   .background-layer {
     position: fixed !important;
@@ -121,7 +121,6 @@
     left: 0;
     width: 100vw !important;
     height: 100vh !important;
-    display: flex !important;
     justify-content: center !important;
     align-items: center !important;
     pointer-events: none;
@@ -133,7 +132,6 @@
   .background-image {
     width: 100vw !important;
     height: 100vh !important;
-    display: flex;
     justify-content: center;
     align-items: center;
   }
