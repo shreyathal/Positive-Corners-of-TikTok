@@ -3,7 +3,7 @@ import { svelte } from '@sveltejs/vite-plugin-svelte'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/positive-TikTok/', 
+  base: '/Positive-Corners-of-TikTok/', 
   plugins: [svelte()],
   build: {
     outDir: 'docs', 
