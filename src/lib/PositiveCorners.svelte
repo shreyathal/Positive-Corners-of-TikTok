@@ -179,7 +179,7 @@
           </button>
           
           <button on:click={collapseDetails}>
-            Collapse TikToks
+            Breathe and Begin
           </button>
         </div>
         
