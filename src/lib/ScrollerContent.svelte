@@ -19,21 +19,23 @@
   bind:offset
   bind:progress
 >
+
   <div slot="background" class="background-layer">
     <div class="background-image">
       {#if index === 0}
-        <img src="/positive-TikTok/bgnew1.png" alt="Background 1" />
+        <img src={`${import.meta.env.BASE_URL}bgnew1.png`} alt="Background 1" />
       {:else if index === 1}
-        <img src="/positive-TikTok/bgnew2.png" alt="Background 2" />
+        <img src={`${import.meta.env.BASE_URL}bgnew2.png`} alt="Background 2" />
       {:else if index === 2}
-        <img src="/positive-TikTok/bgnew3.png" alt="Background 3" />
+        <img src={`${import.meta.env.BASE_URL}bgnew3.png`} alt="Background 3" />
       {:else if index === 3}
-        <img src="/positive-TikTok/bgnew4.png" alt="Background 4" />
+        <img src={`${import.meta.env.BASE_URL}bgnew4.png`} alt="Background 4" />
       {:else}
-        <img src="/positive-TikTok/bgnew1.png" alt="Default Background" />
+        <img src={`${import.meta.env.BASE_URL}bgnew1.png`} alt="Default Background" />
       {/if}
     </div>
   </div>
+  
   
   <div slot="foreground" class="scrolling-layer">
     <section>

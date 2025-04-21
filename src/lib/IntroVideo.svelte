@@ -11,16 +11,25 @@
         titleSection?.scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
     }
+
   </script>
   
   <div class="video-container">
-    <video 
+    <!-- <video 
       bind:this={videoElement}
-      src="/positive-TikTok/intronew.mp4" 
+      src={`${import.meta.env.BASE_URL}intronew.mp4`}
       autoplay
       muted
       playsinline
       on:ended={handleVideoEnd}
+    ></video> -->
+    <video 
+      src={`${import.meta.env.BASE_URL}intronew.mp4`}
+      autoplay
+      muted
+      playsinline
+      on:ended={handleVideoEnd}
+      style="z-index: 9999; width: 100%; height: 100%; position: absolute;"
     ></video>
   </div>
   
